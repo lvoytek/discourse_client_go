@@ -1,6 +1,9 @@
 package discourse
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+)
 
 type Client struct {
 	client   *http.Client
@@ -14,19 +17,12 @@ func NewClient(DiscourseURL string, APIKey string, Username string) *Client {
 
 	return &Client{
 		client:   client,
-		host:     DiscourseURL,
+		host:     strings.TrimRight(DiscourseURL, "/"),
 		apiKey:   APIKey,
 		username: Username,
 	}
 }
 
 func NewAnonymousClient(DiscourseURL string) *Client {
-	client := &http.Client{}
-
-	return &Client{
-		client:   client,
-		host:     DiscourseURL,
-		apiKey:   "",
-		username: "",
-	}
+	return NewClient(DiscourseURL, "", "")
 }
