@@ -30,6 +30,27 @@ type BadgeType struct {
 	SortOrder int    `json:"sort_order"`
 }
 
+type GrantedBy struct {
+	ID             int    `json:"id"`
+	Username       string `json:"username"`
+	Name           string `json:"name"`
+	AvatarTemplate string `json:"avatar_template"`
+	FlairName      string `json:"flair_name"`
+	Admin          bool   `json:"admin"`
+	Moderator      bool   `json:"moderator"`
+	TrustLevel     int    `json:"trust_level"`
+}
+
+type UserBadge struct {
+	ID               int    `json:"id"`
+	GrantedAt        string `json:"granted_at"`
+	GroupingPosition int    `json:"grouping_position"`
+	IsFavorite       string `json:"is_favorite"`
+	CanFavorite      bool   `json:"can_favorite"`
+	BadgeID          int    `json:"badge_id"`
+	GrantedByID      int    `json:"granted_by_id"`
+}
+
 type BadgeGrouping struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`
@@ -55,4 +76,11 @@ type ListBadgesResponse struct {
 		BadgeGroupingIDs []int `json:"badge_grouping_ids,omitempty"`
 		BadgeTypeIDs     []int `json:"badge_type_ids,omitempty"`
 	} `json:"admin_badges,omitempty"`
+}
+
+type ListBadgesForUserResponse struct {
+	Badges      []Badge     `json:"badges"`
+	BadgeTypes  []BadgeType `json:"badge_types"`
+	GrantedBies []GrantedBy `json:"granted_bies"`
+	UserBadges  []UserBadge `json:"user_badges"`
 }
