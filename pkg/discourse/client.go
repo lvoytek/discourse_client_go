@@ -87,7 +87,7 @@ func (client *Client) sendWithBodyJSONReturn(method string, endpoint string, dat
 }
 
 func (client *Client) send(method string, endpoint string, data []byte) (*http.Response, error) {
-	urlString := fmt.Sprintf("%s/%s", client.host, endpoint)
+	urlString := fmt.Sprintf("%s/%s.json", client.host, endpoint)
 
 	if client.apiKey != "" && client.username != "" {
 		auth := url.Values{}

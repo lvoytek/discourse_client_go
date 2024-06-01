@@ -1,5 +1,10 @@
 package discourse
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 type Badge struct {
 	ID                int    `json:"id"`
 	Name              string `json:"name"`
@@ -83,4 +88,15 @@ type ListBadgesForUserResponse struct {
 	BadgeTypes  []BadgeType `json:"badge_types"`
 	GrantedBies []GrantedBy `json:"granted_bies"`
 	UserBadges  []UserBadge `json:"user_badges"`
+}
+
+func ListBadgesForUser(client *Client, username string) (response *ListBadgesForUserResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("user-badges/%s", username), []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
 }
