@@ -6,45 +6,46 @@ import (
 )
 
 type Category struct {
-	ID                           int        `json:"id"`
-	Name                         string     `json:"name"`
-	Color                        string     `json:"color"`
-	TextColor                    string     `json:"text_color"`
-	Slug                         string     `json:"slug"`
-	TopicCount                   int        `json:"topic_count"`
-	PostCount                    int        `json:"post_count"`
-	Position                     int        `json:"position"`
-	Description                  string     `json:"description"`
-	DescriptionText              string     `json:"description_text"`
-	DescriptionExcerpt           string     `json:"description_excerpt"`
-	TopicURL                     string     `json:"topic_url"`
-	ReadRestricted               bool       `json:"read_restricted"`
-	Permission                   int        `json:"permission"`
-	NotificationLevel            int        `json:"notification_level"`
-	CanEdit                      bool       `json:"can_edit"`
-	TopicTemplate                string     `json:"topic_template"`
-	FormTemplateIDs              []int      `json:"form_template_ids"`
-	HasChildren                  bool       `json:"has_children"`
-	SubcategoryCount             int        `json:"subcategory_count"`
-	SortOrder                    string     `json:"sort_order"`
-	SortAscending                string     `json:"sort_ascending"`
-	ShowSubcategoryList          bool       `json:"show_subcategory_list"`
-	NumFeaturedTopics            int        `json:"num_featured_topics"`
-	DefaultView                  string     `json:"default_view"`
-	SubcategoryListStyle         string     `json:"subcategory_list_style"`
-	DefaultTopPeriod             string     `json:"default_top_period"`
-	DefaultListFilter            string     `json:"default_list_filter"`
-	MinimumRequiredTags          int        `json:"minimum_required_tags"`
-	NavigateToFirstPostAfterRead bool       `json:"navigate_to_first_post_after_read"`
-	AllowedTags                  []Tag      `json:"allowed_tags"`
-	AllowedTagGroups             []TagGroup `json:"allowed_tag_groups"`
-	AllowGlobalTags              bool       `json:"allow_global_tags"`
+	ID                           int               `json:"id"`
+	Name                         string            `json:"name"`
+	Color                        string            `json:"color"`
+	TextColor                    string            `json:"text_color"`
+	Slug                         string            `json:"slug"`
+	TopicCount                   int               `json:"topic_count"`
+	PostCount                    int               `json:"post_count"`
+	Position                     int               `json:"position"`
+	Description                  string            `json:"description"`
+	DescriptionText              string            `json:"description_text"`
+	DescriptionExcerpt           string            `json:"description_excerpt"`
+	TopicURL                     string            `json:"topic_url"`
+	ReadRestricted               bool              `json:"read_restricted"`
+	Permission                   int               `json:"permission"`
+	NotificationLevel            int               `json:"notification_level"`
+	CanEdit                      bool              `json:"can_edit"`
+	TopicTemplate                string            `json:"topic_template"`
+	FormTemplateIDs              []int             `json:"form_template_ids"`
+	HasChildren                  bool              `json:"has_children"`
+	SubcategoryCount             int               `json:"subcategory_count"`
+	SortOrder                    string            `json:"sort_order"`
+	SortAscending                string            `json:"sort_ascending"`
+	ShowSubcategoryList          bool              `json:"show_subcategory_list"`
+	NumFeaturedTopics            int               `json:"num_featured_topics"`
+	DefaultView                  string            `json:"default_view"`
+	SubcategoryListStyle         string            `json:"subcategory_list_style"`
+	DefaultTopPeriod             string            `json:"default_top_period"`
+	DefaultListFilter            string            `json:"default_list_filter"`
+	MinimumRequiredTags          int               `json:"minimum_required_tags"`
+	NavigateToFirstPostAfterRead bool              `json:"navigate_to_first_post_after_read"`
+	CustomFields                 map[string]string `json:"custom_fields"`
+	AllowedTags                  []Tag             `json:"allowed_tags"`
+	AllowedTagGroups             []TagGroup        `json:"allowed_tag_groups"`
+	AllowGlobalTags              bool              `json:"allow_global_tags"`
 	RequiredTagGroups            []struct {
 		Name     string `json:"name"`
 		MinCount int    `json:"min_count"`
-	} `json:"required_tag_groups"`
+	} `json:"required_tag_groups,omitempty"`
 	ReadOnlyBanner                      string            `json:"read_only_banner"`
-	AvailableGroups                     []Group           `json:"available_groups"`
+	AvailableGroups                     []Group           `json:"available_groups,omitempty"`
 	AutoCloseHours                      string            `json:"auto_close_hours"`
 	AutoCloseBasedOnLastPost            bool              `json:"auto_close_based_on_last_post"`
 	AllowUnlimitedOwnerEditsOnFirstPost bool              `json:"allow_unlimited_owner_edits_on_first_post"`
@@ -64,7 +65,11 @@ type Category struct {
 	UploadedBackgroundDark              string            `json:"uploaded_background_dark"`
 }
 
-func ShowCategory(client *Client, id int) (response *Category, err error) {
+type ShowCategoryResponse struct {
+	Category Category `json:"category"`
+}
+
+func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err error) {
 	data, sendErr := client.Get(fmt.Sprintf("c/%d/show", id), []byte{})
 
 	if sendErr != nil {
