@@ -27,7 +27,7 @@ type User struct {
 	PrimaryGroupName               string            `json:"primary_group_name"`
 	FlairGroupID                   string            `json:"flair_group_id"`
 	FlairName                      string            `json:"flair_name"`
-	FlairUrl                       string            `json:"flair_url"`
+	FlairURL                       string            `json:"flair_url"`
 	FlairBgColor                   string            `json:"flair_bg_color"`
 	FlairColor                     string            `json:"flair_color"`
 	FeaturedTopic                  string            `json:"featured_topic"`
