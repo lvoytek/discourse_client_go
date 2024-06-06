@@ -1,6 +1,6 @@
 package discourse
 
-type Group struct {
+type NewGroup struct {
 	Name                            string `json:"name"`
 	FullName                        string `json:"full_name"`
 	BioRaw                          string `json:"bio_raw"`
@@ -22,7 +22,7 @@ type Group struct {
 	WatchingFirstPostCategoryIDs    []int  `json:"watching_first_post_category_ids"`
 }
 
-type GetGroupResponse struct {
+type Group struct {
 	ID                        int    `json:"id"`
 	Automatic                 bool   `json:"automatic"`
 	Name                      string `json:"name"`
@@ -57,4 +57,11 @@ type GetGroupResponse struct {
 type GroupPermission struct {
 	PermissionType int    `json:"permission_type"`
 	GroupName      string `json:"group_name"`
+}
+
+type GroupUser struct {
+	GroupID           int  `json:"group_id"`
+	UserID            int  `json:"user_id"`
+	NotificationLevel int  `json:"notification_level"`
+	Owner             bool `json:"owner"`
 }
