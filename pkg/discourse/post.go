@@ -1,5 +1,10 @@
 package discourse
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 type NewPost struct {
 	Title             string `json:"title"`
 	Raw               string `json:"raw"`
@@ -24,12 +29,12 @@ type PostData struct {
 	PostType                    int          `json:"post_type"`
 	UpdatedAt                   string       `json:"updated_at"`
 	ReplyCount                  int          `json:"reply_count"`
-	ReplyToPostNumber           string       `json:"reply_to_post_number"`
+	ReplyToPostNumber           int          `json:"reply_to_post_number"`
 	QuoteCount                  int          `json:"quote_count"`
 	IncomingLinkCount           int          `json:"incoming_link_count"`
 	Reads                       int          `json:"reads"`
 	ReadersCount                int          `json:"readers_count"`
-	Score                       int          `json:"score"`
+	Score                       float32      `json:"score"`
 	Yours                       bool         `json:"yours"`
 	TopicID                     int          `json:"topic_id"`
 	TopicSlug                   string       `json:"topic_slug"`
@@ -38,7 +43,7 @@ type PostData struct {
 	FlairURL                    string       `json:"flair_url"`
 	FlairBgColor                string       `json:"flair_bg_color"`
 	FlairColor                  string       `json:"flair_color"`
-	FlairGroupID                string       `json:"flair_group_id"`
+	FlairGroupID                int          `json:"flair_group_id"`
 	Version                     int          `json:"version"`
 	CanEdit                     bool         `json:"can_edit"`
 	CanDelete                   bool         `json:"can_delete"`
@@ -74,4 +79,41 @@ type PostAction struct {
 	Acted   bool `json:"acted"`
 	CanUndo bool `json:"can_undo"`
 	CanAct  bool `json:"can_act"`
+}
+
+type GetLatestPostsResponse struct {
+	LatestPosts []PostData `json:"latest_posts"`
+}
+
+func GetLatestPosts(client *Client) (response *GetLatestPostsResponse, err error) {
+	data, sendErr := client.Get("posts", []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetPostByID(client *Client, id int) (response *PostData, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d", id), []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetPostRepliesByID(client *Client, id int) (response []PostData, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d/replies", id), []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
 }
