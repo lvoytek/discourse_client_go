@@ -1,5 +1,7 @@
 package discourse
 
+import "encoding/json"
+
 type SiteInfo struct {
 	DefaultArchetype                    string                 `json:"default_archetype"`
 	NotificationTypes                   map[string]int         `json:"notification_types"`
@@ -85,4 +87,26 @@ type SiteArchetype struct {
 	ID      string              `json:"id"`
 	Name    string              `json:"name"`
 	Options []map[string]string `json:"options"`
+}
+
+func GetSiteBasicInfo(client *Client) (response *SiteBasicInfo, err error) {
+	data, sendErr := client.Get("site/basic-info", []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetSiteInfo(client *Client) (response *SiteInfo, err error) {
+	data, sendErr := client.Get("site", []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
 }
