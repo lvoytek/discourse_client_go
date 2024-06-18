@@ -9,12 +9,12 @@ type Tag struct {
 }
 
 type TagGroup struct {
-	ID            int         `json:"id"`
-	Name          string      `json:"name"`
-	TagNames      []string    `json:"tag_names"`
-	ParentTagName []string    `json:"parent_tag_name"`
-	OnePerTopic   bool        `json:"one_per_topic"`
-	Permissions   Permissions `json:"permissions"`
+	ID            int            `json:"id"`
+	Name          string         `json:"name"`
+	TagNames      []string       `json:"tag_names"`
+	ParentTagName []string       `json:"parent_tag_name"`
+	OnePerTopic   bool           `json:"one_per_topic"`
+	Permissions   map[string]int `json:"permissions"`
 }
 
 type ListTagsResponse struct {
