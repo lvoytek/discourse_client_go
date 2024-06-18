@@ -81,6 +81,13 @@ type PostAction struct {
 	CanAct  bool `json:"can_act"`
 }
 
+type PostCreator struct {
+	ID             int    `json:"id"`
+	Username       string `json:"username"`
+	AvatarTemplate string `json:"avatar_template"`
+	Name           string `json:"name"`
+}
+
 type GetLatestPostsResponse struct {
 	LatestPosts []PostData `json:"latest_posts"`
 }
