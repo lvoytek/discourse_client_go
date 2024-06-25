@@ -171,7 +171,7 @@ func GetTopicByID(client *Client, id int) (response *TopicData, err error) {
 	return response, err
 }
 
-func CreateTopic(client *Client, topic *NewPost) (response *TopicData, err error) {
+func CreateTopic(client *Client, topic *NewPost) (response *PostData, err error) {
 	topic.Archetype = "topic"
 	inputData, marshalError := json.Marshal(topic)
 

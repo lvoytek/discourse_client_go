@@ -58,7 +58,7 @@ type Category struct {
 		MinCount int    `json:"min_count"`
 	} `json:"required_tag_groups,omitempty"`
 	ReadOnlyBanner                      string            `json:"read_only_banner"`
-	AvailableGroups                     []Group           `json:"available_groups,omitempty"`
+	AvailableGroups                     []string          `json:"available_groups,omitempty"`
 	AutoCloseHours                      string            `json:"auto_close_hours"`
 	AutoCloseBasedOnLastPost            bool              `json:"auto_close_based_on_last_post"`
 	AllowUnlimitedOwnerEditsOnFirstPost bool              `json:"allow_unlimited_owner_edits_on_first_post"`
@@ -93,7 +93,7 @@ func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err e
 	return response, err
 }
 
-func CreateCategory(client *Client, category *NewCategory) (response *Category, err error) {
+func CreateCategory(client *Client, category *NewCategory) (response *ShowCategoryResponse, err error) {
 	inputData, marshalError := json.Marshal(category)
 
 	if marshalError != nil {

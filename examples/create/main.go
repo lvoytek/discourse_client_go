@@ -31,9 +31,9 @@ func main() {
 		fmt.Println(err)
 	} else {
 		// Create a new topic in the new category
-		newCategoryID := newCategory.ID
+		newCategoryID := newCategory.Category.ID
 		newTopicData := discourse.NewPost{
-			Title:    "New test topic",
+			Title:    "New test topic title",
 			Raw:      "This is the main content for a new api topic.",
 			Category: newCategoryID,
 		}
@@ -43,7 +43,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			newTopicID := newTopic.ID
+			newTopicID := newTopic.TopicID
 			newPostData := discourse.NewPost{
 				Title:   "New post in topic",
 				Raw:     "This is a new post in the new topic.",
@@ -56,7 +56,7 @@ func main() {
 				fmt.Println(err)
 			} else {
 				newPostID := newPost.ID
-				fmt.Println("Created category ", newCategoryID, "topic ", newTopicID, "post ", newPostID)
+				fmt.Println("Created category", newCategoryID, "topic", newTopicID, "post", newPostID)
 			}
 
 		}

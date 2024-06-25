@@ -8,15 +8,15 @@ import (
 type NewPost struct {
 	Title             string `json:"title"`
 	Raw               string `json:"raw"`
-	TopicID           int    `json:"topic_id"`
-	Category          int    `json:"category"`
-	TargetRecipients  string `json:"target_recipients"`
-	TargetUsernames   string `json:"target_usernames"`
+	TopicID           int    `json:"topic_id,omitempty"`
+	Category          int    `json:"category,omitempty"`
+	TargetRecipients  string `json:"target_recipients,omitempty"`
+	TargetUsernames   string `json:"target_usernames,omitempty"`
 	Archetype         string `json:"archetype"`
-	CreatedAt         string `json:"created_at"`
-	ReplyToPostNumber int    `json:"reply_to_post_number"`
-	EmbedURL          string `json:"embed_url"`
-	ExternalID        string `json:"external_id"`
+	CreatedAt         string `json:"created_at,omitempty"`
+	ReplyToPostNumber int    `json:"reply_to_post_number,omitempty"`
+	EmbedURL          string `json:"embed_url,omitempty"`
+	ExternalID        string `json:"external_id,omitempty"`
 }
 
 type PostData struct {
