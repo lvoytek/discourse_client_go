@@ -5,6 +5,19 @@ import (
 	"fmt"
 )
 
+type NewCategory struct {
+	Name                      string         `json:"name"`
+	Color                     string         `json:"color"`
+	TextColor                 string         `json:"text_color"`
+	ParentCategoryID          int            `json:"parent_category_id,omitempty"`
+	AllowBadges               bool           `json:"allow_badges"`
+	Slug                      string         `json:"slug"`
+	TopicFeaturedLinksAllowed bool           `json:"topic_featured_links_allowed"`
+	Permissions               map[string]int `json:"permissions"`
+	SearchPriority            int            `json:"search_priority"`
+	FormTemplateIDs           map[string]int `json:"form_template_ids"`
+}
+
 type Category struct {
 	ID                           int               `json:"id"`
 	Name                         string            `json:"name"`
@@ -71,6 +84,23 @@ type ShowCategoryResponse struct {
 
 func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err error) {
 	data, sendErr := client.Get(fmt.Sprintf("c/%d/show", id), []byte{})
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func CreateCategory(client *Client, category *NewCategory) (response *Category, err error) {
+	inputData, marshalError := json.Marshal(category)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("categories", inputData)
 
 	if sendErr != nil {
 		return nil, sendErr

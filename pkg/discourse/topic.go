@@ -170,3 +170,21 @@ func GetTopicByID(client *Client, id int) (response *TopicData, err error) {
 	err = json.Unmarshal(data, &response)
 	return response, err
 }
+
+func CreateTopic(client *Client, topic *NewPost) (response *TopicData, err error) {
+	topic.Archetype = "topic"
+	inputData, marshalError := json.Marshal(topic)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("posts", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}

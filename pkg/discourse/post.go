@@ -124,3 +124,21 @@ func GetPostRepliesByID(client *Client, id int) (response []PostData, err error)
 	err = json.Unmarshal(data, &response)
 	return response, err
 }
+
+func CreatePost(client *Client, post *NewPost) (response *PostData, err error) {
+	post.Archetype = "post"
+	inputData, marshalError := json.Marshal(post)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("posts", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
