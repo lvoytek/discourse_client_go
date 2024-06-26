@@ -82,8 +82,29 @@ type ShowCategoryResponse struct {
 	Category Category `json:"category"`
 }
 
+type ListCategoriesResponse struct {
+	CategoryList CategoryList `json:"category_list"`
+}
+
+type CategoryList struct {
+	CanCreateCategory bool       `json:"can_create_category"`
+	CanCreateTopic    bool       `json:"can_create_topic"`
+	Categories        []Category `json:"categories"`
+}
+
 func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err error) {
 	data, sendErr := client.Get(fmt.Sprintf("c/%d/show", id))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func ListCategories(client *Client) (response *ListCategoriesResponse, err error) {
+	data, sendErr := client.Get("categories")
 
 	if sendErr != nil {
 		return nil, sendErr
