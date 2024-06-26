@@ -93,7 +93,7 @@ type GetLatestPostsResponse struct {
 }
 
 func GetLatestPosts(client *Client) (response *GetLatestPostsResponse, err error) {
-	data, sendErr := client.Get("posts", []byte{})
+	data, sendErr := client.Get("posts")
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -104,7 +104,7 @@ func GetLatestPosts(client *Client) (response *GetLatestPostsResponse, err error
 }
 
 func GetPostByID(client *Client, id int) (response *PostData, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("posts/%d", id), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d", id))
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -115,7 +115,7 @@ func GetPostByID(client *Client, id int) (response *PostData, err error) {
 }
 
 func GetPostRepliesByID(client *Client, id int) (response []PostData, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("posts/%d/replies", id), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d/replies", id))
 
 	if sendErr != nil {
 		return nil, sendErr

@@ -91,7 +91,7 @@ type ListBadgesForUserResponse struct {
 }
 
 func ListBadgesForUser(client *Client, username string) (response *ListBadgesForUserResponse, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("user-badges/%s", username), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("user-badges/%s", username))
 
 	if sendErr != nil {
 		return nil, sendErr

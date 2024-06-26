@@ -90,7 +90,7 @@ type SiteArchetype struct {
 }
 
 func GetSiteBasicInfo(client *Client) (response *SiteBasicInfo, err error) {
-	data, sendErr := client.Get("site/basic-info", []byte{})
+	data, sendErr := client.Get("site/basic-info")
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -101,7 +101,7 @@ func GetSiteBasicInfo(client *Client) (response *SiteBasicInfo, err error) {
 }
 
 func GetSiteInfo(client *Client) (response *SiteInfo, err error) {
-	data, sendErr := client.Get("site", []byte{})
+	data, sendErr := client.Get("site")
 
 	if sendErr != nil {
 		return nil, sendErr

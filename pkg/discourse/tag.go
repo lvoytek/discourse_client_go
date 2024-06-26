@@ -58,7 +58,7 @@ type ListTagGroupsResponse struct {
 }
 
 func GetTagGroupByID(client *Client, id int) (response *TagGroup, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("tag_groups/%d", id), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("tag_groups/%d", id))
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -69,7 +69,7 @@ func GetTagGroupByID(client *Client, id int) (response *TagGroup, err error) {
 }
 
 func GetTagByName(client *Client, name string) (response *TagData, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("tag/%s", name), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("tag/%s", name))
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -80,7 +80,7 @@ func GetTagByName(client *Client, name string) (response *TagData, err error) {
 }
 
 func ListTags(client *Client) (response *ListTagsResponse, err error) {
-	data, sendErr := client.Get("tags", []byte{})
+	data, sendErr := client.Get("tags")
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -91,7 +91,7 @@ func ListTags(client *Client) (response *ListTagsResponse, err error) {
 }
 
 func ListTagGroups(client *Client) (response *ListTagGroupsResponse, err error) {
-	data, sendErr := client.Get("tag_groups", []byte{})
+	data, sendErr := client.Get("tag_groups")
 
 	if sendErr != nil {
 		return nil, sendErr

@@ -32,7 +32,7 @@ type GetNotificationsResponse struct {
 }
 
 func GetPersonalNotifications(client *Client) (response *GetNotificationsResponse, err error) {
-	data, sendErr := client.Get("notifications", []byte{})
+	data, sendErr := client.Get("notifications")
 
 	if sendErr != nil {
 		return nil, sendErr

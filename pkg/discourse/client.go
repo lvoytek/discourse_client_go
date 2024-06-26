@@ -46,7 +46,11 @@ func (client *Client) Delete(endpoint string, data []byte) error {
 	return client.sendWithNoReturn("DELETE", endpoint, data)
 }
 
-func (client *Client) Get(endpoint string, data []byte) ([]byte, error) {
+func (client *Client) Get(endpoint string) ([]byte, error) {
+	return client.sendWithBodyJSONReturn("GET", endpoint, []byte{})
+}
+
+func (client *Client) GetWithBodyJSONInput(endpoint string, data []byte) ([]byte, error) {
 	return client.sendWithBodyJSONReturn("GET", endpoint, data)
 }
 

@@ -161,7 +161,7 @@ type Thumbnail struct {
 }
 
 func GetTopicByID(client *Client, id int) (response *TopicData, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("t/%d", id), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("t/%d", id))
 
 	if sendErr != nil {
 		return nil, sendErr

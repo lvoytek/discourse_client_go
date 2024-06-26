@@ -83,7 +83,7 @@ type ShowCategoryResponse struct {
 }
 
 func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("c/%d/show", id), []byte{})
+	data, sendErr := client.Get(fmt.Sprintf("c/%d/show", id))
 
 	if sendErr != nil {
 		return nil, sendErr
