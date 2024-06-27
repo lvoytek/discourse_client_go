@@ -123,6 +123,28 @@ func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err e
 	return response, err
 }
 
+func GetCategoryContentsByID(client *Client, id int) (response *CategoryContents, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("c/%d", id))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetCategoryContentsBySlug(client *Client, slug string) (response *CategoryContents, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("c/%s", slug))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
 func ListCategories(client *Client) (response *ListCategoriesResponse, err error) {
 	data, sendErr := client.Get("categories")
 
@@ -142,6 +164,23 @@ func CreateCategory(client *Client, category *NewCategory) (response *ShowCatego
 	}
 
 	data, sendErr := client.PostWithReturn("categories", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func UpdateCategoryByID(client *Client, id int, categoryData *NewCategory) (response *ShowCategoryResponse, err error) {
+	inputData, marshalError := json.Marshal(categoryData)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PutWithReturn(fmt.Sprintf("categories/%d", id), inputData)
 
 	if sendErr != nil {
 		return nil, sendErr
