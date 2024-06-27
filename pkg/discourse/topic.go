@@ -80,8 +80,8 @@ type SuggestedTopic struct {
 	Visible           bool              `json:"visible"`
 	Closed            bool              `json:"closed"`
 	Archived          bool              `json:"archived"`
-	Bookmarked        string            `json:"bookmarked"`
-	Liked             string            `json:"liked"`
+	Bookmarked        bool              `json:"bookmarked"`
+	Liked             bool              `json:"liked"`
 	Tags              []string          `json:"tags"`
 	TagsDescriptions  map[string]string `json:"tags_descriptions"`
 	LikeCount         int               `json:"like_count"`
@@ -179,4 +179,8 @@ func CreateTopic(client *Client, topic *NewPost) (response *PostData, err error)
 
 	err = json.Unmarshal(data, &response)
 	return response, err
+}
+
+func BookmarkTopicByID(client *Client, id int) (err error) {
+	return client.Put(fmt.Sprintf("t/%d/bookmark", id), []byte{})
 }
