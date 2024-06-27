@@ -53,7 +53,7 @@ type TopicData struct {
 	MessageBusLastID     int               `json:"message_bus_last_id"`
 	ParticipantCount     int               `json:"participant_count"`
 	ShowReadIndicator    bool              `json:"show_read_indicator"`
-	Thumbnails           []Thumbnail       `json:"thumbnails"`
+	Thumbnails           []Image           `json:"thumbnails"`
 	SlowModeEnabledUntil string            `json:"slow_mode_enabled_until"`
 	Summarizable         bool              `json:"summarizable"`
 	Details              TopicDetails      `json:"details"`
@@ -150,14 +150,6 @@ type TopicAction struct {
 	Count  int  `json:"count"`
 	Hidden bool `json:"hidden"`
 	CanAct bool `json:"can_act"`
-}
-
-type Thumbnail struct {
-	MaxWidth  int    `json:"max_width"`
-	MaxHeight int    `json:"max_height"`
-	Width     int    `json:"width"`
-	Height    int    `json:"height"`
-	URL       string `json:"url"`
 }
 
 func GetTopicByID(client *Client, id int) (response *TopicData, err error) {
