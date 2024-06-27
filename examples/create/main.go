@@ -43,6 +43,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		} else {
+			// Create a new post in the new topic
 			newTopicID := newTopic.TopicID
 			newPostData := discourse.NewPost{
 				Title:   "New post in topic",
