@@ -139,3 +139,7 @@ func UpdateBadgeByID(client *Client, id int, badge *Badge) (response *UpdatedBad
 	err = json.Unmarshal(data, &response)
 	return response, err
 }
+
+func DeleteBadgeByID(client *Client, id int) (err error) {
+	return client.Delete(fmt.Sprintf("admin/badges/%d", id))
+}
