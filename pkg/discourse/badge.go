@@ -83,6 +83,11 @@ type ListBadgesResponse struct {
 	} `json:"admin_badges,omitempty"`
 }
 
+type UpdatedBadgeData struct {
+	BadgeTypes []BadgeType `json:"badge_types"`
+	Badge      Badge       `json:"badge"`
+}
+
 type ListBadgesForUserResponse struct {
 	Badges      []Badge     `json:"badges"`
 	BadgeTypes  []BadgeType `json:"badge_types"`
@@ -92,6 +97,40 @@ type ListBadgesForUserResponse struct {
 
 func ListBadgesForUser(client *Client, username string) (response *ListBadgesForUserResponse, err error) {
 	data, sendErr := client.Get(fmt.Sprintf("user-badges/%s", username))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func CreateBadge(client *Client, badge *Badge) (response *UpdatedBadgeData, err error) {
+	inputData, marshalError := json.Marshal(badge)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("admin/badges", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func UpdateBadgeByID(client *Client, id int, badge *Badge) (response *UpdatedBadgeData, err error) {
+	inputData, marshalError := json.Marshal(badge)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PutWithReturn(fmt.Sprintf("admin/badges/%d", id), inputData)
 
 	if sendErr != nil {
 		return nil, sendErr

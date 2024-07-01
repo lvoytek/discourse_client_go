@@ -26,6 +26,8 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | Function | API Endpoint | Type | Input Body | Output Body |
 | :------- | :----------- | :--: | :---- | :----- |
 | ListBadgesForUser | /user-badges/{username}.json | GET || ListBadgesForUserResponse |
+| CreateBadge | /admin/badges.json | POST | Badge | UpdatedBadgeData |
+| UpdateBadgeByID | /admin/badges/{id}.json | PUT | Badge | UpdatedBadgeData |
 | CreateCategory | /categories.json | POST | NewCategory | ShowCategoryResponse |
 | ListCategories | /categories.json | GET || ListCategoriesResponse |
 | UpdateCategoryByID | /categories/{id}.json | PUT | NewCategory | ShowCategoryResponse |
