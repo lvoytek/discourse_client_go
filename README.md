@@ -21,5 +21,28 @@ discourseClient := discourse.NewAnonymousClient("https://discourse.ubuntu.com")
 ```
 ### Access
 
-Functions that access the Discourse site are meant to match [Discourse API](https://docs.discourse.org/) calls 1:1. The input will include the `Client` variable, and a variable with included fields that match the required data to upload if needed. The return will be either a success/fail, or a variable with fields matching the site's output.
+Functions that access the Discourse site are meant to match [Discourse API](https://docs.discourse.org/) calls 1:1. The input will include the `Client` variable, an identifier variable if needed, and a variable with included fields that match the required data to upload if needed. The return will be either a success/fail, or a variable with fields matching the site's output.
 
+| Function | API Endpoint | Type | Input Body | Output Body |
+| :------- | :----------- | :--: | :---- | :----- |
+| ListBadgesForUser | /user-badges/{username}.json | GET || ListBadgesForUserResponse |
+| CreateCategory | /categories.json | POST | NewCategory | ShowCategoryResponse |
+| ListCategories | /categories.json | GET || ListCategoriesResponse |
+| UpdateCategoryByID | /categories/{id}.json | PUT | NewCategory | ShowCategoryResponse |
+| GetCategoryContentsByID | /c/{id}.json | GET || CategoryContents |
+| GetCategoryContentsBySlug | /c/{slug}.json | GET || CategoryContents |
+| ShowCategory | /c/{id}/show.json | GET || ShowCategoryResponse |
+| GetPersonalNotifications | /notifications.json | GET || GetNotificationsResponse |
+| GetLatestPosts | /posts.json | GET || GetLatestPostsResponse |
+| CreatePost | /posts.json | POST | NewPost | PostData |
+| GetPostByID | /posts/{id}.json | GET || PostData |
+| GetPostRepliesByID | /posts/{id}/replies.json | GET || []PostData |
+| CreateTopic | /posts.json | POST | NewPost | PostData |
+| GetTopicByID | /t/{id}.json | GET || TopicData |
+| BookmarkTopicByID | /t/{id}/bookmark.json | PUT |||
+| GetSiteInfo | /site.json | GET || SiteInfo |
+| GetSiteBasicInfo | /site/basic-info.json | GET || SiteBasicInfo |
+| ListTagGroups | /tag_groups.json | GET || ListTagGroupsResponse |
+| GetTagGroupByID | /tag_groups/{id}.json | GET || TagGroup |
+| ListTags | /tags.json | GET || ListTagsResponse |
+| GetTagByName | /tag/{name}.json | GET || TagData |
