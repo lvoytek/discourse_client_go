@@ -1,5 +1,10 @@
 package discourse
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 type NewGroup struct {
 	Name                            string `json:"name"`
 	FullName                        string `json:"full_name"`
@@ -64,4 +69,33 @@ type GroupUser struct {
 	UserID            int  `json:"user_id"`
 	NotificationLevel int  `json:"notification_level"`
 	Owner             bool `json:"owner"`
+}
+
+type CreateGroupRequest struct {
+	Group NewGroup `json:"group"`
+}
+
+type CreateGroupResponse struct {
+	BasicGroup Group `json:"basic_group"`
+}
+
+func CreateGroup(client *Client, group *CreateGroupRequest) (response *CreateGroupResponse, err error) {
+	inputData, marshalError := json.Marshal(group)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("admin/groups", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func DeleteGroupByID(client *Client, id int) (err error) {
+	return client.Delete(fmt.Sprintf("admin/groups/%d", id))
 }
