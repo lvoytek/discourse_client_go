@@ -106,6 +106,17 @@ func ListBadgesForUser(client *Client, username string) (response *ListBadgesFor
 	return response, err
 }
 
+func ListBadges(client *Client) (response *ListBadgesResponse, err error) {
+	data, sendErr := client.Get("badges")
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
 func CreateBadge(client *Client, badge *Badge) (response *UpdatedBadgeData, err error) {
 	inputData, marshalError := json.Marshal(badge)
 
