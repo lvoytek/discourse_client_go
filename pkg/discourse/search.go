@@ -185,7 +185,7 @@ func generateSearchQueryString(query *SearchQuery) string {
 		searchString = fmt.Sprintf("%smin_posts:%d ", searchString, query.MinPosts)
 	}
 
-	if query.MaxPosts > -1 {
+	if query.MaxPosts > 0 {
 		searchString = fmt.Sprintf("%smax_posts:%d ", searchString, query.MaxPosts)
 	}
 
@@ -193,7 +193,7 @@ func generateSearchQueryString(query *SearchQuery) string {
 		searchString = fmt.Sprintf("%smin_views:%d ", searchString, query.MinViews)
 	}
 
-	if query.MaxViews > -1 {
+	if query.MaxViews > 0 {
 		searchString = fmt.Sprintf("%smax_views:%d ", searchString, query.MaxViews)
 	}
 

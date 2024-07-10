@@ -35,6 +35,11 @@ func TestGenerateSearchQueryString(t *testing.T) {
 			"",
 		},
 		{
+			"Defaults",
+			SearchQuery{},
+			"",
+		},
+		{
 			"Time check",
 			SearchQuery{
 				Username:         "",
@@ -126,29 +131,6 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				MaxViews:      -1,
 			},
 			"tags:api+docs+test in:bookmarks in:first with:images status:closed,open",
-		},
-		{
-			"Max 0s",
-			SearchQuery{
-				Username:         "",
-				Category:         "",
-				Tags:             []string{},
-				RequiresAllTags:  false,
-				Before:           time.Time{},
-				After:            time.Time{},
-				Order:            "",
-				AssignedUsername: "",
-				In:               []string{},
-				With:             []string{},
-				Status:           []string{},
-				Group:            "",
-				GroupMessages:    "",
-				MinPosts:         0,
-				MaxPosts:         0,
-				MinViews:         0,
-				MaxViews:         0,
-			},
-			"max_posts:0 max_views:0",
 		},
 		{
 			"Other Fields",
