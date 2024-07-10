@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 )
 
@@ -96,7 +97,7 @@ type GroupedSearchResult struct {
 
 func Search(client *Client, query *SearchQuery) (response *SearchResult, err error) {
 
-	data, sendErr := client.GetWithQueryString("search", generateSearchQueryString(query))
+	data, sendErr := client.GetWithQueryString("search", url.QueryEscape(generateSearchQueryString(query)))
 
 	if sendErr != nil {
 		return nil, sendErr
