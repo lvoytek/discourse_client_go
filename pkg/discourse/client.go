@@ -31,35 +31,39 @@ func NewAnonymousClient(DiscourseURL string) *Client {
 }
 
 func (client *Client) Post(endpoint string, data []byte) error {
-	return client.sendWithNoReturn("POST", endpoint, data)
+	return client.sendWithNoReturn("POST", endpoint, "", data)
 }
 
 func (client *Client) PostWithReturn(endpoint string, data []byte) ([]byte, error) {
-	return client.sendWithBodyJSONReturn("POST", endpoint, data)
+	return client.sendWithBodyJSONReturn("POST", endpoint, "", data)
 }
 
 func (client *Client) Put(endpoint string, data []byte) error {
-	return client.sendWithNoReturn("PUT", endpoint, data)
+	return client.sendWithNoReturn("PUT", endpoint, "", data)
 }
 
 func (client *Client) PutWithReturn(endpoint string, data []byte) ([]byte, error) {
-	return client.sendWithBodyJSONReturn("PUT", endpoint, data)
+	return client.sendWithBodyJSONReturn("PUT", endpoint, "", data)
 }
 
 func (client *Client) Delete(endpoint string) error {
-	return client.sendWithNoReturn("DELETE", endpoint, []byte{})
+	return client.sendWithNoReturn("DELETE", endpoint, "", []byte{})
 }
 
 func (client *Client) Get(endpoint string) ([]byte, error) {
-	return client.sendWithBodyJSONReturn("GET", endpoint, []byte{})
+	return client.sendWithBodyJSONReturn("GET", endpoint, "", []byte{})
+}
+
+func (client *Client) GetWithQueryString(endpoint string, query string) ([]byte, error) {
+	return client.sendWithBodyJSONReturn("GET", endpoint, query, []byte{})
 }
 
 func (client *Client) GetWithBodyJSONInput(endpoint string, data []byte) ([]byte, error) {
-	return client.sendWithBodyJSONReturn("GET", endpoint, data)
+	return client.sendWithBodyJSONReturn("GET", endpoint, "", data)
 }
 
-func (client *Client) sendWithNoReturn(method string, endpoint string, data []byte) error {
-	res, err := client.send(method, endpoint, data)
+func (client *Client) sendWithNoReturn(method string, endpoint string, query string, data []byte) error {
+	res, err := client.send(method, endpoint, query, data)
 
 	if err != nil {
 		return err
@@ -81,8 +85,8 @@ func (client *Client) sendWithNoReturn(method string, endpoint string, data []by
 
 }
 
-func (client *Client) sendWithBodyJSONReturn(method string, endpoint string, data []byte) ([]byte, error) {
-	res, err := client.send(method, endpoint, data)
+func (client *Client) sendWithBodyJSONReturn(method string, endpoint string, query string, data []byte) ([]byte, error) {
+	res, err := client.send(method, endpoint, query, data)
 
 	if err != nil {
 		return nil, err
@@ -103,8 +107,12 @@ func (client *Client) sendWithBodyJSONReturn(method string, endpoint string, dat
 	return body, nil
 }
 
-func (client *Client) send(method string, endpoint string, data []byte) (*http.Response, error) {
+func (client *Client) send(method string, endpoint string, query string, data []byte) (*http.Response, error) {
 	urlString := fmt.Sprintf("%s/%s.json", client.host, endpoint)
+
+	if query != "" {
+		urlString = fmt.Sprintf("%s?q=%s", urlString, query)
+	}
 
 	req, err := http.NewRequest(method, urlString, bytes.NewBuffer(data))
 	if err != nil {
