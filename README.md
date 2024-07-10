@@ -42,9 +42,35 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | CreateTopic | /posts.json | POST | NewPost | PostData |
 | GetTopicByID | /t/{id}.json | GET || TopicData |
 | BookmarkTopicByID | /t/{id}/bookmark.json | PUT |||
+| Search | /search.json | GET | See [Below](#the-search-function) | SearchResult |
 | GetSiteInfo | /site.json | GET || SiteInfo |
 | GetSiteBasicInfo | /site/basic-info.json | GET || SiteBasicInfo |
 | ListTagGroups | /tag_groups.json | GET || ListTagGroupsResponse |
 | GetTagGroupByID | /tag_groups/{id}.json | GET || TagGroup |
 | ListTags | /tags.json | GET || ListTagsResponse |
 | GetTagByName | /tag/{name}.json | GET || TagData |
+
+#### The Search Function
+Discourse sites have the special `/search.json` endpoint that allows for custom queries. This can be accessed using `Search()` with a `SearchQuery` object. Fields represent the following:
+
+| Field | Type | Info |
+| :---- | :--- | :---------- |
+| Term | string | Text content to look for, can not start with `#` or `@`, can contain spaces |
+| Username | string | Get posts created by this user |
+| Category | string | Slug of category to limit search to |
+| Tags | []string | Tags associated with each post |
+| RequiresAllTags | bool | When true, posts will only show if they have all the tags provided
+| Before | Time | Search for posts made before this date (not inclusive) |
+| After | Time | Search for posts made on or after this date (inclusive) |
+| Order | string | The order to present data in, by default you can use `OrderLatest`, `OrderLikes`, `OrderViews`, or `OrderLatestTopic` |
+| AssignedUsername | string | Get items assigned to this user |
+| In | []string | Where the search term is located, by default you can use `InTitle`, `InLikes`, `InPersonal`, `InMessages`, `InSeen`, `InUnseen`, `InPosted`, `InCreated`, `InWatching`, `InTracking`, `InBookmarks`, `InAssigned`, `InUnassigned`, `InFirst`, `InPinned`, or `InWiki` |
+| With | []string | Only get posts containing this type of data, by default you can use `WithImages` |
+| Status | []string | The post has at least one of the provided statuses, by default you can use `StatusOpen`, `StatusClosed`, `StatusPublic`, `StatusArchived`, `StatusNoReplies`, `StatusSingleUser`, `StatusSolved`,	or `StatusUnsolved` |
+| Group | string | Group name or ID associated with an item |
+| GroupMessages | string | Get messages associated with group name or ID |
+| MinPosts | int | Minimum number of contained posts, > 0 |
+| MaxPosts | int | Maximum number of contained posts, > 0 |
+| MinViews | int | Minimum views on a post, > 0 |
+| MaxViews | int | Maximum views on a post, > 0 |
+| Custom | map[string][]string | Any additional fields specific to a Discourse site, matches the Status format of `key:val1,val2,val3` |
