@@ -1,5 +1,18 @@
 package discourse
 
+import "encoding/json"
+
+type NewUser struct {
+	Name        string            `json:"name"`
+	Email       string            `json:"email"`
+	Password    string            `json:"password"`
+	Username    string            `json:"username"`
+	Active      bool              `json:"active,omitempty"`
+	Approved    bool              `json:"approved,omitempty"`
+	UserFields  map[string]bool   `json:"user_fields,omitempty"`
+	ExternalIDs map[string]string `json:"external_ids,omitempty"`
+}
+
 type User struct {
 	ID                             int                    `json:"id"`
 	Username                       string                 `json:"username"`
@@ -137,4 +150,28 @@ type UserOption struct {
 	WatchedPrecedenceOverMuted    bool   `json:"watched_precedence_over_muted"`
 	SeenPopups                    []int  `json:"seen_popups"`
 	TopicsUnreadWhenClosed        bool   `json:"topics_unread_when_closed"`
+}
+
+type CreateUserResponse struct {
+	Success bool   `json:"success"`
+	Active  bool   `json:"active"`
+	Message string `json:"message"`
+	UserID  int    `json:"user_id"`
+}
+
+func CreateUser(client *Client, user *NewUser) (response *CreateUserResponse, err error) {
+	inputData, marshalError := json.Marshal(user)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PostWithReturn("users", inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
 }
