@@ -155,6 +155,18 @@ func TestGenerateSearchQueryString(t *testing.T) {
 			},
 			"@lvoytek #server order:latest_topic assigned:lvoytek group:canonical group_messages:canonical min_posts:3 min_views:4",
 		},
+		{
+			"Custom Fields",
+			SearchQuery{
+				Username: "lvoytek",
+				Custom: map[string][]string{
+					"meta":    {"first", "second"},
+					"useless": {},
+					"single":  {"only_item"},
+				},
+			},
+			"@lvoytek meta:first,second single:only_item",
+		},
 	}
 
 	for _, tt := range tests {

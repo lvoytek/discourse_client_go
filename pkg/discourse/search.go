@@ -198,6 +198,22 @@ func generateSearchQueryString(query *SearchQuery) string {
 		searchString = fmt.Sprintf("%smax_views:%d ", searchString, query.MaxViews)
 	}
 
+	for customField, customData := range query.Custom {
+		customDataString := ""
+
+		for index, customItem := range customData {
+			customDataString += customItem
+
+			if index < len(customData)-1 {
+				customDataString += ","
+			}
+		}
+
+		if customDataString != "" {
+			searchString = fmt.Sprintf("%s%s:%s ", searchString, customField, customDataString)
+		}
+	}
+
 	if searchString != "" {
 		searchString = searchString[:len(searchString)-1]
 	}
