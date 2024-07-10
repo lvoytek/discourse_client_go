@@ -49,6 +49,7 @@ const (
 )
 
 type SearchQuery struct {
+	Term             string
 	Username         string
 	Category         string
 	Tags             []string
@@ -110,8 +111,12 @@ func Search(client *Client, query *SearchQuery) (response *SearchResult, err err
 func generateSearchQueryString(query *SearchQuery) string {
 	searchString := ""
 
+	if query.Term != "" {
+		searchString = query.Term + " "
+	}
+
 	if query.Username != "" {
-		searchString = fmt.Sprintf("@%s ", query.Username)
+		searchString = fmt.Sprintf("%s@%s ", searchString, query.Username)
 	}
 
 	if query.Category != "" {

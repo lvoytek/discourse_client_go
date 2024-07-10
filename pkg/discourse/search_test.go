@@ -167,6 +167,22 @@ func TestGenerateSearchQueryString(t *testing.T) {
 			},
 			"@lvoytek meta:first,second single:only_item",
 		},
+		{
+			"Search term only",
+			SearchQuery{
+				Term: "hello world",
+			},
+			"hello world",
+		},
+		{
+			"Search with user and category",
+			SearchQuery{
+				Term:     "hello world",
+				Username: "system",
+				Category: "announcements",
+			},
+			"hello world @system #announcements",
+		},
 	}
 
 	for _, tt := range tests {
