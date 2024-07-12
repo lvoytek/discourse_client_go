@@ -47,6 +47,7 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | GetSiteBasicInfo | /site/basic-info.json | GET || SiteBasicInfo |
 | ListTagGroups | /tag_groups.json | GET || ListTagGroupsResponse |
 | GetTagGroupByID | /tag_groups/{id}.json | GET || TagGroup |
+| DeleteGroupByID | /admin/groups/{id}.json | DEL |||
 | ListTags | /tags.json | GET || ListTagsResponse |
 | GetTagByName | /tag/{name}.json | GET || TagData |
 | CreateUser | /users.json | POST | NewUser | CreateUserResponse |
@@ -57,6 +58,9 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | UpdateUserAvatarByUsername | /u/{username}/preferences/avatar/pick.json | PUT | UserAvatarChoice ||
 | UpdateUserEmailByUsername | /u/{username}/preferences/email.json | PUT | string ||
 | UpdateUserUsernameByUsername | /u/{username}/preferences/username.json | PUT | string ||
+| ActivateUserByID | /admin/users/{id}/activate.json | PUT |||
+| DeactivateUserByID | /admin/users/{id}/deactivate.json | PUT |||
+| DeleteUserByID | /admin/users/{id}.json | DEL | UserDeleteOptions ||
 
 #### The Search Function
 Discourse sites have the special `/search.json` endpoint that allows for custom queries. This can be accessed using `Search()` with a `SearchQuery` object. Fields represent the following:

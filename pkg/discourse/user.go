@@ -305,3 +305,11 @@ func DeleteUserByID(client *Client, id int, deleteOptions *UserDeleteOptions) er
 
 	return client.Delete(fmt.Sprintf("admin/users/%d", id), inputData)
 }
+
+func ActivateUserByID(client *Client, id int) error {
+	return client.Put(fmt.Sprintf("admin/users/%d/activate", id), []byte{})
+}
+
+func DeactivateUserByID(client *Client, id int) error {
+	return client.Put(fmt.Sprintf("admin/users/%d/deactivate", id), []byte{})
+}
