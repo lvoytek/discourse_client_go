@@ -1,6 +1,9 @@
 package discourse
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type NewUser struct {
 	Name        string            `json:"name"`
@@ -159,6 +162,36 @@ type CreateUserResponse struct {
 	UserID  int    `json:"user_id"`
 }
 
+type UpdateUserResponse struct {
+	Success string `json:"success"`
+	User    User   `json:"user"`
+}
+
+type GetUserResponse struct {
+	UserBadges []UserBadge `json:"user_badges"`
+	User       User        `json:"user"`
+}
+
+const (
+	UserAvatarChoiceUploaded string = "uploaded"
+	UserAvatarChoiceCustom   string = "custom"
+	UserAvatarChoiceGravatar string = "gravatar"
+	UserAvatarChoiceSystem   string = "system"
+)
+
+type UserAvatarChoice struct {
+	UploadID int    `json:"upload_id"`
+	Type     string `json:"type"`
+}
+
+type UserEmail struct {
+	Email string `json:"email"`
+}
+
+type UserNewUsername struct {
+	Username string `json:"new_username"`
+}
+
 func CreateUser(client *Client, user *NewUser) (response *CreateUserResponse, err error) {
 	inputData, marshalError := json.Marshal(user)
 
@@ -174,4 +207,84 @@ func CreateUser(client *Client, user *NewUser) (response *CreateUserResponse, er
 
 	err = json.Unmarshal(data, &response)
 	return response, err
+}
+
+func GetUserByUsername(client *Client, username string) (response *GetUserResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("u/%s", username))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetUserByExternalID(client *Client, externalID string) (response *GetUserResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("u/by-external/%s", externalID))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetUserByExternalAuthID(client *Client, provider string, externalID string) (response *GetUserResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("u/by-external/%s/%s", provider, externalID))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func UpdateUserByUsername(client *Client, username string, userData *NewUser) (response *UpdateUserResponse, err error) {
+	inputData, marshalError := json.Marshal(userData)
+
+	if marshalError != nil {
+		return nil, marshalError
+	}
+
+	data, sendErr := client.PutWithReturn(fmt.Sprintf("u/%s", username), inputData)
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func UpdateUserAvatarByUsername(client *Client, username string, avatarChoice *UserAvatarChoice) error {
+	inputData, marshalError := json.Marshal(avatarChoice)
+
+	if marshalError != nil {
+		return marshalError
+	}
+
+	return client.Put(fmt.Sprintf("u/%s/preferences/avatar/pick", username), inputData)
+}
+
+func UpdateUserEmailByUsername(client *Client, username string, email string) error {
+	inputData, marshalError := json.Marshal(UserEmail{Email: email})
+
+	if marshalError != nil {
+		return marshalError
+	}
+
+	return client.Put(fmt.Sprintf("u/%s/preferences/email", username), inputData)
+}
+
+func UpdateUserUsernameByUsername(client *Client, username string, newUsername string) error {
+	inputData, marshalError := json.Marshal(UserNewUsername{Username: newUsername})
+
+	if marshalError != nil {
+		return marshalError
+	}
+
+	return client.Put(fmt.Sprintf("u/%s/preferences/username", username), inputData)
 }

@@ -49,11 +49,14 @@ type GrantedBy struct {
 type UserBadge struct {
 	ID               int    `json:"id"`
 	GrantedAt        string `json:"granted_at"`
-	GroupingPosition int    `json:"grouping_position"`
 	IsFavorite       string `json:"is_favorite"`
 	CanFavorite      bool   `json:"can_favorite"`
 	BadgeID          int    `json:"badge_id"`
 	GrantedByID      int    `json:"granted_by_id"`
+	GroupingPosition int    `json:"grouping_position,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	Count            int    `json:"count,omitempty"`
+	UserID           int    `json:"user_id,omitempty"`
 }
 
 type BadgeGrouping struct {

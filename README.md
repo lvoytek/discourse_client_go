@@ -49,6 +49,14 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | GetTagGroupByID | /tag_groups/{id}.json | GET || TagGroup |
 | ListTags | /tags.json | GET || ListTagsResponse |
 | GetTagByName | /tag/{name}.json | GET || TagData |
+| CreateUser | /users.json | POST | NewUser | CreateUserResponse |
+| GetUserByUsername | /u/{username}.json | GET || GetUserResponse |
+| GetUserByExternalID | /u/by-external/{external_id}.json | GET || GetUserResponse |
+| GetUserByExternalAuthID | /u/by-external/{provider}/{external_id}.json | GET || GetUserResponse |
+| UpdateUserByUsername | /u/{username}.json | PUT | NewUser | UpdateUserResponse |
+| UpdateUserAvatarByUsername | /u/{username}/preferences/avatar/pick.json | PUT | UserAvatarChoice ||
+| UpdateUserEmailByUsername | /u/{username}/preferences/email.json | PUT | string ||
+| UpdateUserUsernameByUsername | /u/{username}/preferences/username.json | PUT | string ||
 
 #### The Search Function
 Discourse sites have the special `/search.json` endpoint that allows for custom queries. This can be accessed using `Search()` with a `SearchQuery` object. Fields represent the following:
