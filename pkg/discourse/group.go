@@ -97,5 +97,5 @@ func CreateGroup(client *Client, group *CreateGroupRequest) (response *CreateGro
 }
 
 func DeleteGroupByID(client *Client, id int) (err error) {
-	return client.Delete(fmt.Sprintf("admin/groups/%d", id))
+	return client.Delete(fmt.Sprintf("admin/groups/%d", id), []byte{})
 }

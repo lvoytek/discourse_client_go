@@ -192,6 +192,13 @@ type UserNewUsername struct {
 	Username string `json:"new_username"`
 }
 
+type UserDeleteOptions struct {
+	DeletePosts bool `json:"delete_posts"`
+	BlockEmail  bool `json:"block_email"`
+	BlockURLs   bool `json:"block_urls"`
+	BlockIP     bool `json:"block_ip"`
+}
+
 func CreateUser(client *Client, user *NewUser) (response *CreateUserResponse, err error) {
 	inputData, marshalError := json.Marshal(user)
 
@@ -287,4 +294,14 @@ func UpdateUserUsernameByUsername(client *Client, username string, newUsername s
 	}
 
 	return client.Put(fmt.Sprintf("u/%s/preferences/username", username), inputData)
+}
+
+func DeleteUserByID(client *Client, id int, deleteOptions *UserDeleteOptions) error {
+	inputData, marshalError := json.Marshal(deleteOptions)
+
+	if marshalError != nil {
+		return marshalError
+	}
+
+	return client.Delete(fmt.Sprintf("admin/users/%d", id), inputData)
 }
