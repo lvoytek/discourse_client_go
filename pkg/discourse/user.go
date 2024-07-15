@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 )
 
 type NewUser struct {
@@ -199,6 +200,55 @@ type UserDeleteOptions struct {
 	BlockIP     bool `json:"block_ip"`
 }
 
+const (
+	PeriodDaily     string = "daily"
+	PeriodWeekly    string = "weekly"
+	PeriodMonthly   string = "monthly"
+	PeriodQuarterly string = "quarterly"
+	PeriodYearly    string = "yearly"
+	PeriodAll       string = "all"
+)
+
+const (
+	OrderLikesReceived string = "likes_received"
+	OrderLikesGiven    string = "likes_given"
+	OrderTopicCount    string = "topic_count"
+	OrderPostCount     string = "post_count"
+	OrderTopicsEntered string = "topics_entered"
+	OrderPostsRead     string = "posts_read"
+	OrderDaysVisited   string = "days_visited"
+)
+
+type UserDirectoryQuery struct {
+	Period    string
+	Order     string
+	Ascending bool
+	Page      int
+}
+
+type UserDirectory struct {
+	DirectoryItems []UserDirectoryEntry  `json:"directory_items"`
+	Meta           UserDirectoryMetadata `json:"meta"`
+}
+
+type UserDirectoryEntry struct {
+	ID            int  `json:"id"`
+	LikesReceived int  `json:"likes_received"`
+	LikesGiven    int  `json:"likes_given"`
+	TopicsEntered int  `json:"topics_entered"`
+	TopicCount    int  `json:"topic_count"`
+	PostCount     int  `json:"post_count"`
+	PostsRead     int  `json:"posts_read"`
+	DaysVisited   int  `json:"days_visited"`
+	User          User `json:"user"`
+}
+
+type UserDirectoryMetadata struct {
+	LastUpdatedAt           string `json:"last_updated_at"`
+	TotalRowsDirectoryItems int    `json:"total_rows_directory_items"`
+	LoadMoreDirectoryItems  string `json:"load_more_directory_items"`
+}
+
 func CreateUser(client *Client, user *NewUser) (response *CreateUserResponse, err error) {
 	inputData, marshalError := json.Marshal(user)
 
@@ -240,6 +290,17 @@ func GetUserByExternalID(client *Client, externalID string) (response *GetUserRe
 
 func GetUserByExternalAuthID(client *Client, provider string, externalID string) (response *GetUserResponse, err error) {
 	data, sendErr := client.Get(fmt.Sprintf("u/by-external/%s/%s", provider, externalID))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func ListUsersByStats(client *Client, query *UserDirectoryQuery) (response *UserDirectory, err error) {
+	data, sendErr := client.GetWithQueryString("directory_items", url.QueryEscape(generateListUsersQuery(query)))
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -312,4 +373,26 @@ func ActivateUserByID(client *Client, id int) error {
 
 func DeactivateUserByID(client *Client, id int) error {
 	return client.Put(fmt.Sprintf("admin/users/%d/deactivate", id), []byte{})
+}
+
+func generateListUsersQuery(query *UserDirectoryQuery) string {
+	if query.Period == "" {
+		query.Period = "all"
+	}
+
+	searchString := fmt.Sprintf("period=%s", query.Period)
+
+	if query.Order != "" {
+		searchString = fmt.Sprintf("%s&order=%s", searchString, query.Order)
+	}
+
+	if query.Ascending {
+		searchString += "&asc=true"
+	}
+
+	if query.Page > 0 {
+		searchString = fmt.Sprintf("%s&page=%d", searchString, query.Page)
+	}
+
+	return searchString
 }
