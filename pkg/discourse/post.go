@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 )
 
 type NewPost struct {
@@ -73,6 +74,34 @@ type PostData struct {
 	DisplayUsername             string       `json:"display_username"`
 }
 
+type PostRevision struct {
+	CreatedAt        string          `json:"created_at"`
+	PostID           int             `json:"post_id"`
+	PreviousHidden   bool            `json:"previous_hidden"`
+	CurrentHidden    bool            `json:"current_hidden"`
+	FirstRevision    int             `json:"first_revision"`
+	PreviousRevision int             `json:"previous_revision"`
+	CurrentRevision  int             `json:"current_revision"`
+	NextRevision     int             `json:"next_revision"`
+	LastRevision     int             `json:"last_revision"`
+	CurrentVersion   int             `json:"current_version"`
+	VersionCount     int             `json:"version_count"`
+	Username         string          `json:"username"`
+	DisplayUsername  string          `json:"display_username"`
+	AvatarTemplate   string          `json:"avatar_template"`
+	EditReason       string          `json:"edit_reason"`
+	BodyChanges      RevisionChanges `json:"body_changes,omitempty"`
+	TitleChanges     RevisionChanges `json:"title_changes,omitempty"`
+	Wiki             bool            `json:"wiki"`
+	CanEdit          bool            `json:"can_edit"`
+}
+
+type RevisionChanges struct {
+	Inline             string `json:"inline"`
+	SideBySide         string `json:"side_by_side"`
+	SideBySideMarkdown string `json:"side_by_side_markdown,omitempty"`
+}
+
 type PostAction struct {
 	ID      int  `json:"id"`
 	Count   int  `json:"count"`
@@ -123,6 +152,33 @@ func GetPostRepliesByID(client *Client, id int) (response []PostData, err error)
 
 	err = json.Unmarshal(data, &response)
 	return response, err
+}
+
+func GetPostRevisionByID(client *Client, id int, revisionNumber int) (response *PostRevision, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d/revisions/%d", id, revisionNumber))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetNumPostRevisionsByID(client *Client, id int) (response int, err error) {
+	secondRevision, err := GetPostRevisionByID(client, id, 2)
+
+	if err == nil {
+		return secondRevision.VersionCount, nil
+	} else if strings.Contains(fmt.Sprint(err), "404") {
+		_, postExistsErr := GetPostByID(client, id)
+
+		if postExistsErr == nil {
+			return 1, nil
+		}
+	}
+
+	return 0, err
 }
 
 func CreatePost(client *Client, post *NewPost) (response *PostData, err error) {

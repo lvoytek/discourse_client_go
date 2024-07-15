@@ -46,4 +46,23 @@ func main() {
 			}
 		}
 	}
+
+	fmt.Println()
+
+	// Get the latest post revision info for a specific post
+	const revisedPostID = 77485
+
+	numPostRevisions, err := discourse.GetNumPostRevisionsByID(discourseClient, revisedPostID)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		latestPostRevision, err := discourse.GetPostRevisionByID(discourseClient, revisedPostID, numPostRevisions)
+
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("Latest revision of", revisedPostID, "created by", latestPostRevision.Username, "- version", latestPostRevision.CurrentRevision)
+		}
+	}
 }
