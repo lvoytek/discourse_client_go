@@ -364,7 +364,7 @@ func DeleteUserByID(client *Client, id int, deleteOptions *UserDeleteOptions) er
 		return marshalError
 	}
 
-	return client.Delete(fmt.Sprintf("admin/users/%d", id), inputData)
+	return client.DeleteWithBodyJSONInput(fmt.Sprintf("admin/users/%d", id), inputData)
 }
 
 func ActivateUserByID(client *Client, id int) error {
