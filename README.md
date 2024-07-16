@@ -36,6 +36,7 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | ShowCategory | /c/{id}/show.json | GET || ShowCategoryResponse |
 | GetPersonalNotifications | /notifications.json | GET || GetNotificationsResponse |
 | GetLatestPosts | /posts.json | GET || GetLatestPostsResponse |
+| GetPostRevisionByID | /posts/{id}/revisions/{revision}.json | GET || PostRevision |
 | CreatePost | /posts.json | POST | NewPost | PostData |
 | GetPostByID | /posts/{id}.json | GET || PostData |
 | GetPostRepliesByID | /posts/{id}/replies.json | GET || []PostData |
@@ -54,6 +55,7 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | GetUserByUsername | /u/{username}.json | GET || GetUserResponse |
 | GetUserByExternalID | /u/by-external/{external_id}.json | GET || GetUserResponse |
 | GetUserByExternalAuthID | /u/by-external/{provider}/{external_id}.json | GET || GetUserResponse |
+| ListUsersByStats | /directory_items.json | GET | See [Below](#the-user-directory-function) | UserDirectory |
 | UpdateUserByUsername | /u/{username}.json | PUT | NewUser | UpdateUserResponse |
 | UpdateUserAvatarByUsername | /u/{username}/preferences/avatar/pick.json | PUT | UserAvatarChoice ||
 | UpdateUserEmailByUsername | /u/{username}/preferences/email.json | PUT | string ||
@@ -86,3 +88,13 @@ Discourse sites have the special `/search.json` endpoint that allows for custom 
 | MinViews | int | Minimum views on a post, > 0 |
 | MaxViews | int | Maximum views on a post, > 0 |
 | Custom | map[string][]string | Any additional fields specific to a Discourse site, matches the Status format of `key:val1,val2,val3` |
+
+#### The User Directory Function
+Discourse sites also have the `/directory_items.json` endpoint for searching through all users, ranked by a certain statistic. This can be accessed through the `ListUsersByStats` function using a `UserDirectoryQuery` object. Note that this query uses pages with a maximum of 50 entries per page. If logged in, the first result on page 0 will be your user statistics, followed by all other users in order. The query includes:
+
+| Field | Type | Info |
+| :---- | :--- | :---------- |
+| Period | string | The length of time that the included statistics represent, and are ranked by. By default you can use `PeriodDaily`, `PeriodWeekly`, `PeriodMonthly`, `PeriodQuarterly`, `PeriodYearly`, or `PeriodAll`. This library considers `PeriodAll` to be the default value. |
+| Order | string | The statistic to rank users by. By default this can be `OrderLikesReceived`, `OrderLikesGiven`, `OrderTopicCount`, `OrderPostCount`, `OrderTopicsEntered`, `OrderPostsRead`, or `OrderDaysVisited`. |
+| Ascending | bool | When true, rank users from the lowest value to the greatest. |
+| Page | int | The page number to look at, starts at 0. The last page number can be determined by the output's `Meta.TotalRowsDirectoryItems` value divided by 50. All pages after will have no entries. |
