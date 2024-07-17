@@ -1,4 +1,6 @@
 # Discourse API Client for Go
+[![Go](https://github.com/lvoytek/discourse_client_go/actions/workflows/go.yml/badge.svg)](https://github.com/lvoytek/discourse_client_go/actions/workflows/go.yml)
+
 Library for interacting with a Discourse site via the [Discourse API](https://docs.discourse.org/)
 
 ## Installation
