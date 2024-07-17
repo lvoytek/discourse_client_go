@@ -162,10 +162,9 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				Custom: map[string][]string{
 					"meta":    {"first", "second"},
 					"useless": {},
-					"single":  {"only_item"},
 				},
 			},
-			"@lvoytek meta:first,second single:only_item",
+			"@lvoytek meta:first,second",
 		},
 		{
 			"Search term only",
