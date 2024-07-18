@@ -139,7 +139,7 @@ type TopicParticipant struct {
 	FlairURL         string `json:"flair_url"`
 	FlairColor       string `json:"flair_color"`
 	FlairBgColor     string `json:"flair_bg_color"`
-	FlairGroupID     string `json:"flair_group_id"`
+	FlairGroupID     int    `json:"flair_group_id"`
 	Admin            bool   `json:"admin"`
 	Moderator        bool   `json:"moderator"`
 	TrustLevel       int    `json:"trust_level"`

@@ -42,7 +42,7 @@ type User struct {
 	RecentTimeRead                 int                    `json:"recent_time_read"`
 	PrimaryGroupID                 string                 `json:"primary_group_id"`
 	PrimaryGroupName               string                 `json:"primary_group_name"`
-	FlairGroupID                   string                 `json:"flair_group_id"`
+	FlairGroupID                   int                    `json:"flair_group_id"`
 	FlairName                      string                 `json:"flair_name"`
 	FlairURL                       string                 `json:"flair_url"`
 	FlairBgColor                   string                 `json:"flair_bg_color"`
