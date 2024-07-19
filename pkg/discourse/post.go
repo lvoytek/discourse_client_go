@@ -4,31 +4,32 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 )
 
 type NewPost struct {
-	Title             string `json:"title"`
-	Raw               string `json:"raw"`
-	TopicID           int    `json:"topic_id,omitempty"`
-	Category          int    `json:"category,omitempty"`
-	TargetRecipients  string `json:"target_recipients,omitempty"`
-	TargetUsernames   string `json:"target_usernames,omitempty"`
-	Archetype         string `json:"archetype"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	ReplyToPostNumber int    `json:"reply_to_post_number,omitempty"`
-	EmbedURL          string `json:"embed_url,omitempty"`
-	ExternalID        string `json:"external_id,omitempty"`
+	Title             string    `json:"title"`
+	Raw               string    `json:"raw"`
+	TopicID           int       `json:"topic_id,omitempty"`
+	Category          int       `json:"category,omitempty"`
+	TargetRecipients  string    `json:"target_recipients,omitempty"`
+	TargetUsernames   string    `json:"target_usernames,omitempty"`
+	Archetype         string    `json:"archetype"`
+	CreatedAt         time.Time `json:"created_at,omitempty"`
+	ReplyToPostNumber int       `json:"reply_to_post_number,omitempty"`
+	EmbedURL          string    `json:"embed_url,omitempty"`
+	ExternalID        string    `json:"external_id,omitempty"`
 }
 
 type PostData struct {
 	ID                          int          `json:"id"`
 	Username                    string       `json:"username"`
 	AvatarTemplate              string       `json:"avatar_template"`
-	CreatedAt                   string       `json:"created_at"`
+	CreatedAt                   time.Time    `json:"created_at"`
 	Cooked                      string       `json:"cooked"`
 	PostNumber                  int          `json:"post_number"`
 	PostType                    int          `json:"post_type"`
-	UpdatedAt                   string       `json:"updated_at"`
+	UpdatedAt                   time.Time    `json:"updated_at"`
 	ReplyCount                  int          `json:"reply_count"`
 	ReplyToPostNumber           int          `json:"reply_to_post_number"`
 	QuoteCount                  int          `json:"quote_count"`
@@ -61,7 +62,7 @@ type PostData struct {
 	UserID                      int          `json:"user_id"`
 	Hidden                      bool         `json:"hidden"`
 	TrustLevel                  int          `json:"trust_level"`
-	DeletedAt                   string       `json:"deleted_at"`
+	DeletedAt                   time.Time    `json:"deleted_at"`
 	UserDeleted                 bool         `json:"user_deleted"`
 	EditReason                  string       `json:"edit_reason"`
 	CanViewEditHistory          bool         `json:"can_view_edit_history"`
@@ -75,7 +76,7 @@ type PostData struct {
 }
 
 type PostRevision struct {
-	CreatedAt        string          `json:"created_at"`
+	CreatedAt        time.Time       `json:"created_at"`
 	PostID           int             `json:"post_id"`
 	PreviousHidden   bool            `json:"previous_hidden"`
 	CurrentHidden    bool            `json:"current_hidden"`

@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type TopicData struct {
@@ -15,11 +16,11 @@ type TopicData struct {
 	Title                string            `json:"title"`
 	FancyTitle           string            `json:"fancy_title"`
 	PostsCount           int               `json:"posts_count"`
-	CreatedAt            string            `json:"created_at"`
+	CreatedAt            time.Time         `json:"created_at"`
 	Views                int               `json:"views"`
 	ReplyCount           int               `json:"reply_count"`
 	LikeCount            int               `json:"like_count"`
-	LastPostedAt         string            `json:"last_posted_at"`
+	LastPostedAt         time.Time         `json:"last_posted_at"`
 	Visible              bool              `json:"visible"`
 	Closed               bool              `json:"closed"`
 	Archived             bool              `json:"archived"`
@@ -28,11 +29,11 @@ type TopicData struct {
 	Slug                 string            `json:"slug"`
 	CategoryID           int               `json:"category_id"`
 	WordCount            int               `json:"word_count"`
-	DeletedAt            string            `json:"deleted_at"`
+	DeletedAt            time.Time         `json:"deleted_at"`
 	UserID               int               `json:"user_id"`
 	FeaturedLink         string            `json:"featured_link"`
 	PinnedGlobally       bool              `json:"pinned_globally"`
-	PinnedAt             string            `json:"pinned_at"`
+	PinnedAt             time.Time         `json:"pinned_at"`
 	PinnedUntil          string            `json:"pinned_until"`
 	ImageURL             string            `json:"image_url"`
 	SlowModeSeconds      int               `json:"slow_mode_seconds"`
@@ -68,10 +69,10 @@ type SuggestedTopic struct {
 	ReplyCount        int               `json:"reply_count"`
 	HighestPostNumber int               `json:"highest_post_number"`
 	ImageURL          string            `json:"image_url"`
-	CreatedAt         string            `json:"created_at"`
-	LastPostedAt      string            `json:"last_posted_at"`
+	CreatedAt         time.Time         `json:"created_at"`
+	LastPostedAt      time.Time         `json:"last_posted_at"`
 	Bumped            bool              `json:"bumped"`
-	BumpedAt          string            `json:"bumped_at"`
+	BumpedAt          time.Time         `json:"bumped_at"`
 	Archetype         string            `json:"archetype"`
 	Unseen            bool              `json:"unseen"`
 	Pinned            bool              `json:"pinned"`

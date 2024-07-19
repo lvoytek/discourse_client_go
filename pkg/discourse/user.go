@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"time"
 )
 
 type NewUser struct {
@@ -21,9 +22,9 @@ type User struct {
 	ID                             int                    `json:"id"`
 	Username                       string                 `json:"username"`
 	Name                           string                 `json:"name"`
-	LastPostedAt                   string                 `json:"last_posted_at"`
-	LastSeenAt                     string                 `json:"last_seen_at"`
-	CreatedAt                      string                 `json:"created_at"`
+	LastPostedAt                   time.Time              `json:"last_posted_at"`
+	LastSeenAt                     time.Time              `json:"last_seen_at"`
+	CreatedAt                      time.Time              `json:"created_at"`
 	Ignored                        bool                   `json:"ignored"`
 	Muted                          bool                   `json:"muted"`
 	CanIgnoreUser                  bool                   `json:"can_ignore_user"`
@@ -101,16 +102,16 @@ type User struct {
 }
 
 type UserAuthToken struct {
-	ID        int    `json:"id"`
-	ClientIp  string `json:"client_ip"`
-	Location  string `json:"location"`
-	Browser   string `json:"browser"`
-	Device    string `json:"device"`
-	OS        string `json:"os"`
-	Icon      string `json:"icon"`
-	CreatedAt string `json:"created_at"`
-	SeenAt    string `json:"seen_at"`
-	IsActive  bool   `json:"is_active"`
+	ID        int       `json:"id"`
+	ClientIp  string    `json:"client_ip"`
+	Location  string    `json:"location"`
+	Browser   string    `json:"browser"`
+	Device    string    `json:"device"`
+	OS        string    `json:"os"`
+	Icon      string    `json:"icon"`
+	CreatedAt time.Time `json:"created_at"`
+	SeenAt    time.Time `json:"seen_at"`
+	IsActive  bool      `json:"is_active"`
 }
 
 type UserOption struct {

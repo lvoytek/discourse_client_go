@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type Badge struct {
@@ -47,16 +48,16 @@ type GrantedBy struct {
 }
 
 type UserBadge struct {
-	ID               int    `json:"id"`
-	GrantedAt        string `json:"granted_at"`
-	IsFavorite       string `json:"is_favorite"`
-	CanFavorite      bool   `json:"can_favorite"`
-	BadgeID          int    `json:"badge_id"`
-	GrantedByID      int    `json:"granted_by_id"`
-	GroupingPosition int    `json:"grouping_position,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	Count            int    `json:"count,omitempty"`
-	UserID           int    `json:"user_id,omitempty"`
+	ID               int       `json:"id"`
+	GrantedAt        time.Time `json:"granted_at"`
+	IsFavorite       string    `json:"is_favorite"`
+	CanFavorite      bool      `json:"can_favorite"`
+	BadgeID          int       `json:"badge_id"`
+	GrantedByID      int       `json:"granted_by_id"`
+	GroupingPosition int       `json:"grouping_position,omitempty"`
+	CreatedAt        time.Time `json:"created_at,omitempty"`
+	Count            int       `json:"count,omitempty"`
+	UserID           int       `json:"user_id,omitempty"`
 }
 
 type BadgeGrouping struct {
