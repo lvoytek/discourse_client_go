@@ -29,7 +29,7 @@ func main() {
 		}
 
 		// Get the first topic in the category and bookmark it
-		firstCategoryContents, err := discourse.GetCategoryContentsBySlug(discourseClient, firstCategory.Slug)
+		firstCategoryContents, err := discourse.GetCategoryContentsBySlug(discourseClient, firstCategory.Slug, 0)
 
 		if err != nil {
 			fmt.Println(err)

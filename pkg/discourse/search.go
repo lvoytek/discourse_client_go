@@ -109,10 +109,10 @@ func Search(client *Client, query *SearchQuery) (response *SearchResult, err err
 }
 
 func generateSearchQueryString(query *SearchQuery) string {
-	searchString := ""
+	searchString := "q="
 
 	if query.Term != "" {
-		searchString = query.Term + " "
+		searchString = fmt.Sprintf("%s%s ", searchString, query.Term)
 	}
 
 	if query.Username != "" {

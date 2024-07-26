@@ -115,7 +115,7 @@ func (client *Client) send(method string, endpoint string, query string, data []
 	urlString := fmt.Sprintf("%s/%s.json", client.host, endpoint)
 
 	if query != "" {
-		urlString = fmt.Sprintf("%s?q=%s", urlString, query)
+		urlString = fmt.Sprintf("%s?%s", urlString, query)
 	}
 
 	req, err := http.NewRequest(method, urlString, bytes.NewBuffer(data))
