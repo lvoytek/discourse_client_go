@@ -37,7 +37,7 @@ type Group struct {
 	VisibilityLevel           int    `json:"visibility_level"`
 	PrimaryGroup              bool   `json:"primary_group"`
 	Title                     string `json:"title"`
-	GrantTrustLevel           string `json:"grant_trust_level"`
+	GrantTrustLevel           int    `json:"grant_trust_level"`
 	IncomingEmail             string `json:"incoming_email"`
 	HasMessages               bool   `json:"has_messages"`
 	FlairURL                  string `json:"flair_url"`
@@ -71,12 +71,72 @@ type GroupUser struct {
 	Owner             bool `json:"owner"`
 }
 
+type GetGroupResponse struct {
+	Group Group `json:"group"`
+}
+
 type CreateGroupRequest struct {
 	Group NewGroup `json:"group"`
 }
 
 type CreateGroupResponse struct {
 	BasicGroup Group `json:"basic_group"`
+}
+
+type GroupMemberList struct {
+	Members []User              `json:"members"`
+	Owners  []User              `json:"owners"`
+	Meta    GroupMemberMetadata `json:"meta"`
+}
+
+type GroupMemberMetadata struct {
+	Total  int `json:"total"`
+	Limit  int `json:"limit"`
+	Offset int `json:"offset"`
+}
+
+func GetGroupByID(client *Client, id int) (response *GetGroupResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("groups/%d", id))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetGroupByName(client *Client, name string) (response *GetGroupResponse, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("groups/%s", name))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetGroupMembersByID(client *Client, id int, offset int) (response *GroupMemberList, err error) {
+	data, sendErr := client.GetWithQueryString(fmt.Sprintf("groups/%d/members", id), fmt.Sprintf("offset=%d", offset))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
+func GetGroupMembersByName(client *Client, name string, offset int) (response *GroupMemberList, err error) {
+	data, sendErr := client.GetWithQueryString(fmt.Sprintf("groups/%s/members", name), fmt.Sprintf("offset=%d", offset))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
 }
 
 func CreateGroup(client *Client, group *CreateGroupRequest) (response *CreateGroupResponse, err error) {
