@@ -24,4 +24,11 @@ func main() {
 		fmt.Println("First category in full list:", allCategoriesResponse.CategoryList.Categories[0].Name)
 	}
 
+	categorySecondPage, err := discourse.GetCategoryContentsBySlug(discourseClient, "server", 2)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("First server topic on second page:", categorySecondPage.TopicList.Topics[0].Title)
+	}
 }

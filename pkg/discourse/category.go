@@ -3,6 +3,7 @@ package discourse
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 )
 
 type NewCategory struct {
@@ -123,8 +124,8 @@ func ShowCategory(client *Client, id int) (response *ShowCategoryResponse, err e
 	return response, err
 }
 
-func GetCategoryContentsByID(client *Client, id int) (response *CategoryContents, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("c/%d", id))
+func GetCategoryContentsByID(client *Client, id int, page int) (response *CategoryContents, err error) {
+	data, sendErr := client.GetWithQueryString(fmt.Sprintf("c/%d", id), url.QueryEscape(fmt.Sprintf("page=%d", page)))
 
 	if sendErr != nil {
 		return nil, sendErr
@@ -134,8 +135,8 @@ func GetCategoryContentsByID(client *Client, id int) (response *CategoryContents
 	return response, err
 }
 
-func GetCategoryContentsBySlug(client *Client, slug string) (response *CategoryContents, err error) {
-	data, sendErr := client.Get(fmt.Sprintf("c/%s", slug))
+func GetCategoryContentsBySlug(client *Client, slug string, page int) (response *CategoryContents, err error) {
+	data, sendErr := client.GetWithQueryString(fmt.Sprintf("c/%s", slug), url.QueryEscape(fmt.Sprintf("page=%d", page)))
 
 	if sendErr != nil {
 		return nil, sendErr
