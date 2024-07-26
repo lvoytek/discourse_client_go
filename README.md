@@ -33,8 +33,8 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | CreateCategory | /categories.json | POST | NewCategory | ShowCategoryResponse |
 | ListCategories | /categories.json | GET || ListCategoriesResponse |
 | UpdateCategoryByID | /categories/{id}.json | PUT | NewCategory | ShowCategoryResponse |
-| GetCategoryContentsByID | /c/{id}.json | GET || CategoryContents |
-| GetCategoryContentsBySlug | /c/{slug}.json | GET || CategoryContents |
+| GetCategoryContentsByID | /c/{id}.json?page={page} | GET || CategoryContents |
+| GetCategoryContentsBySlug | /c/{slug}.json?page={page} | GET || CategoryContents |
 | ShowCategory | /c/{id}/show.json | GET || ShowCategoryResponse |
 | GetPersonalNotifications | /notifications.json | GET || GetNotificationsResponse |
 | GetLatestPosts | /posts.json | GET || GetLatestPostsResponse |
@@ -50,6 +50,11 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | GetSiteBasicInfo | /site/basic-info.json | GET || SiteBasicInfo |
 | ListTagGroups | /tag_groups.json | GET || ListTagGroupsResponse |
 | GetTagGroupByID | /tag_groups/{id}.json | GET || TagGroup |
+| GetGroupByID | /groups/{id}.json | GET || GetGroupResponse |
+| GetGroupByName | /groups/{name}.json | GET || GetGroupResponse |
+| GetGroupMembersByID | /groups/{id}/members.json?offset={offset} | GET || GroupMemberList |
+| GetGroupMembersByName | /groups/{name}/members.json?offset={offset} | GET || GroupMemberList |
+| CreateGroup | /admin/groups.json | POST | CreateGroupRequest | CreateGroupResponse |
 | DeleteGroupByID | /admin/groups/{id}.json | DEL |||
 | ListTags | /tags.json | GET || ListTagsResponse |
 | GetTagByName | /tag/{name}.json | GET || TagData |
