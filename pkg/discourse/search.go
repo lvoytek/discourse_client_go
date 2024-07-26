@@ -223,5 +223,9 @@ func generateSearchQueryString(query *SearchQuery) string {
 		searchString = searchString[:len(searchString)-1]
 	}
 
+	if searchString == "q" {
+		searchString = ""
+	}
+
 	return searchString
 }

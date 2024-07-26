@@ -60,7 +60,7 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				MinViews:         0,
 				MaxViews:         -1,
 			},
-			"before:2024-04-27 after:2023-10-14",
+			"q=before:2024-04-27 after:2023-10-14",
 		},
 		{
 			"Tags In With and Status",
@@ -95,7 +95,7 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				MinViews:      0,
 				MaxViews:      -1,
 			},
-			"tags:api,docs,test in:bookmarks in:first with:images status:closed,open",
+			"q=tags:api,docs,test in:bookmarks in:first with:images status:closed,open",
 		},
 		{
 			"All tags required",
@@ -130,7 +130,7 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				MinViews:      0,
 				MaxViews:      -1,
 			},
-			"tags:api+docs+test in:bookmarks in:first with:images status:closed,open",
+			"q=tags:api+docs+test in:bookmarks in:first with:images status:closed,open",
 		},
 		{
 			"Other Fields",
@@ -153,7 +153,7 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				MinViews:         4,
 				MaxViews:         -1,
 			},
-			"@lvoytek #server order:latest_topic assigned:lvoytek group:canonical group_messages:canonical min_posts:3 min_views:4",
+			"q=@lvoytek #server order:latest_topic assigned:lvoytek group:canonical group_messages:canonical min_posts:3 min_views:4",
 		},
 		{
 			"Custom Fields",
@@ -164,14 +164,14 @@ func TestGenerateSearchQueryString(t *testing.T) {
 					"useless": {},
 				},
 			},
-			"@lvoytek meta:first,second",
+			"q=@lvoytek meta:first,second",
 		},
 		{
 			"Search term only",
 			SearchQuery{
 				Term: "hello world",
 			},
-			"hello world",
+			"q=hello world",
 		},
 		{
 			"Search with user and category",
@@ -180,7 +180,7 @@ func TestGenerateSearchQueryString(t *testing.T) {
 				Username: "system",
 				Category: "announcements",
 			},
-			"hello world @system #announcements",
+			"q=hello world @system #announcements",
 		},
 	}
 
