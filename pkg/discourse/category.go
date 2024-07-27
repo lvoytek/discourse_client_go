@@ -86,7 +86,7 @@ type Category struct {
 }
 
 type CategoryContents struct {
-	Users         []PostCreator     `json:"users"`
+	Users         []User            `json:"users"`
 	PrimaryGroups []Group           `json:"primary_groups"`
 	TopicList     CategoryTopicList `json:"topic_list"`
 }
