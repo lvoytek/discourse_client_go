@@ -171,7 +171,7 @@ func GetNumPostRevisionsByID(client *Client, id int) (response int, err error) {
 
 	if err == nil {
 		return secondRevision.VersionCount, nil
-	} else if strings.Contains(fmt.Sprint(err), "404") {
+	} else if strings.Contains(fmt.Sprint(err), "404") || strings.Contains(fmt.Sprint(err), "403") {
 		_, postExistsErr := GetPostByID(client, id)
 
 		if postExistsErr == nil {
