@@ -41,7 +41,7 @@ type User struct {
 	CustomFields                   map[string]interface{} `json:"custom_fields"`
 	TimeRead                       int                    `json:"time_read"`
 	RecentTimeRead                 int                    `json:"recent_time_read"`
-	PrimaryGroupID                 string                 `json:"primary_group_id"`
+	PrimaryGroupID                 int                    `json:"primary_group_id"`
 	PrimaryGroupName               string                 `json:"primary_group_name"`
 	FlairGroupID                   int                    `json:"flair_group_id"`
 	FlairName                      string                 `json:"flair_name"`
@@ -54,7 +54,7 @@ type User struct {
 	CanEditUsername                bool                   `json:"can_edit_username"`
 	CanEditEmail                   bool                   `json:"can_edit_email"`
 	CanEditName                    bool                   `json:"can_edit_name"`
-	UploadedAvatarID               string                 `json:"uploaded_avatar_id"`
+	UploadedAvatarID               int                    `json:"uploaded_avatar_id"`
 	HasTitleBadges                 bool                   `json:"has_title_badges"`
 	PendingCount                   int                    `json:"pending_count"`
 	PendingPostsCount              int                    `json:"pending_posts_count"`
@@ -75,7 +75,7 @@ type User struct {
 	TrackedCategoryIDs             []int                  `json:"tracked_category_ids"`
 	WatchedCategoryIDs             []int                  `json:"watched_category_ids"`
 	WatchedFirstPostCategoryIDs    []int                  `json:"watched_first_post_category_ids"`
-	SystemAvatarUploadID           string                 `json:"system_avatar_upload_id"`
+	SystemAvatarUploadID           int                    `json:"system_avatar_upload_id"`
 	SystemAvatarTemplate           string                 `json:"system_avatar_template"`
 	MutedUsernames                 []string               `json:"muted_usernames"`
 	IgnoredUsernames               []string               `json:"ignored_usernames"`
