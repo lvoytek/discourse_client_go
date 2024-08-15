@@ -15,7 +15,7 @@ func main() {
 	discourseClient := discourse.NewClient(site, apiKey, username)
 
 	// Get the first category and change color to orange
-	allCategoriesResponse, err := discourse.ListCategories(discourseClient)
+	allCategoriesResponse, err := discourse.ListCategories(discourseClient, false)
 
 	if err != nil {
 		fmt.Println(err)
