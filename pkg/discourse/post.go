@@ -166,11 +166,22 @@ func GetPostRevisionByID(client *Client, id int, revisionNumber int) (response *
 	return response, err
 }
 
+func GetPostLatestRevisionByID(client *Client, id int) (response *PostRevision, err error) {
+	data, sendErr := client.Get(fmt.Sprintf("posts/%d/revisions/latest", id))
+
+	if sendErr != nil {
+		return nil, sendErr
+	}
+
+	err = json.Unmarshal(data, &response)
+	return response, err
+}
+
 func GetNumPostRevisionsByID(client *Client, id int) (response int, err error) {
-	secondRevision, err := GetPostRevisionByID(client, id, 2)
+	latestRevision, err := GetPostLatestRevisionByID(client, id)
 
 	if err == nil {
-		return secondRevision.VersionCount, nil
+		return latestRevision.VersionCount, nil
 	} else if strings.Contains(fmt.Sprint(err), "404") || strings.Contains(fmt.Sprint(err), "403") {
 		_, postExistsErr := GetPostByID(client, id)
 

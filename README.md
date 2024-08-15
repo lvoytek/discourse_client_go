@@ -39,6 +39,7 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | GetPersonalNotifications | /notifications.json | GET || GetNotificationsResponse |
 | GetLatestPosts | /posts.json | GET || GetLatestPostsResponse |
 | GetPostRevisionByID | /posts/{id}/revisions/{revision}.json | GET || PostRevision |
+| GetPostLatestRevisionByID | /posts/{id}/revisions/latest.json | GET || PostRevision |
 | CreatePost | /posts.json | POST | NewPost | PostData |
 | GetPostByID | /posts/{id}.json | GET || PostData |
 | GetPostRepliesByID | /posts/{id}/replies.json | GET || []PostData |
