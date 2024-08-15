@@ -31,7 +31,7 @@ Functions that access the Discourse site are meant to match [Discourse API](http
 | CreateBadge | /admin/badges.json | POST | Badge | UpdatedBadgeData |
 | UpdateBadgeByID | /admin/badges/{id}.json | PUT | Badge | UpdatedBadgeData |
 | CreateCategory | /categories.json | POST | NewCategory | ShowCategoryResponse |
-| ListCategories | /categories.json | GET || ListCategoriesResponse |
+| ListCategories | /categories.json?include_subcategories={showSubcategories} | GET || ListCategoriesResponse |
 | UpdateCategoryByID | /categories/{id}.json | PUT | NewCategory | ShowCategoryResponse |
 | GetCategoryContentsByID | /c/{id}.json?page={page} | GET || CategoryContents |
 | GetCategoryContentsBySlug | /c/{slug}.json?page={page} | GET || CategoryContents |

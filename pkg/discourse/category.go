@@ -18,7 +18,7 @@ type NewCategory struct {
 	FormTemplateIDs           map[string]int `json:"form_template_ids,omitempty"`
 }
 
-type Category struct {
+type CategoryWithoutSubcategories struct {
 	ID                           int                    `json:"id"`
 	Name                         string                 `json:"name"`
 	Color                        string                 `json:"color"`
@@ -85,6 +85,11 @@ type Category struct {
 	SubcategoryIDs                      []int             `json:"subcategory_ids,omitempty"`
 }
 
+type Category struct {
+	CategoryWithoutSubcategories
+	SubcategoryList []CategoryWithoutSubcategories `json:"subcategory_list"`
+}
+
 type CategoryContents struct {
 	Users         []User            `json:"users"`
 	PrimaryGroups []Group           `json:"primary_groups"`
@@ -145,8 +150,8 @@ func GetCategoryContentsBySlug(client *Client, slug string, page int) (response 
 	return response, err
 }
 
-func ListCategories(client *Client) (response *ListCategoriesResponse, err error) {
-	data, sendErr := client.Get("categories")
+func ListCategories(client *Client, showSubcategories bool) (response *ListCategoriesResponse, err error) {
+	data, sendErr := client.GetWithQueryString("categories", fmt.Sprintf("include_subcategories=%t", showSubcategories))
 
 	if sendErr != nil {
 		return nil, sendErr
