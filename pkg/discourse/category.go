@@ -55,7 +55,7 @@ type CategoryWithoutSubcategories struct {
 	UploadedBackgroundDark       Image                  `json:"uploaded_background_dark"`
 	CustomFields                 map[string]interface{} `json:"custom_fields,omitempty"`
 	AllowedTags                  []Tag                  `json:"allowed_tags,omitempty"`
-	AllowedTagGroups             []TagGroup             `json:"allowed_tag_groups,omitempty"`
+	AllowedTagGroups             []string               `json:"allowed_tag_groups,omitempty"`
 	AllowGlobalTags              bool                   `json:"allow_global_tags,omitempty"`
 	RequiredTagGroups            []struct {
 		Name     string `json:"name"`
