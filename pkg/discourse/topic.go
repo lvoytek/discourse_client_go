@@ -50,7 +50,7 @@ type TopicData struct {
 	ChunkSize            int               `json:"chunk_size"`
 	Bookmarked           bool              `json:"bookmarked"`
 	Bookmarks            []string          `json:"bookmarks"`
-	TopicTimer           string            `json:"topic_timer"`
+	TopicTimer           TopicTimer        `json:"topic_timer"`
 	MessageBusLastID     int               `json:"message_bus_last_id"`
 	ParticipantCount     int               `json:"participant_count"`
 	ShowReadIndicator    bool              `json:"show_read_indicator"`
@@ -151,6 +151,15 @@ type TopicAction struct {
 	Count  int  `json:"count"`
 	Hidden bool `json:"hidden"`
 	CanAct bool `json:"can_act"`
+}
+
+type TopicTimer struct {
+	ID              int       `json:"id"`
+	ExecuteAt       time.Time `json:"execute_at"`
+	DurationMinutes int       `json:"duration_minutes"`
+	BasedOnLastPost bool      `json:"based_on_last_post"`
+	StatusType      string    `json:"status_type"`
+	CategoryID      int       `json:"category_id"`
 }
 
 func GetTopicByID(client *Client, id int) (response *TopicData, err error) {
